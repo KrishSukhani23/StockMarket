@@ -21,9 +21,24 @@ app.get('/', (req,res)=>{
 
 app.post("/company",(req,res) => {
     console.log(req.body.id);
-    res.render('Homepage',{
-        id : req.body.id
+    const spawn = require('child_process').spawn
+    const pythonProcess = spawn('python',['./predict.py' , req.body.id])
+
+    pythonProcess.stdout.on('data', (data) => {
+        console.log(data.toString());
+        res.render('Homepage',{
+            id : req.body.id,
+            price: data.toString()
+        })
+        
+    })  
+    
+
+    pythonProcess.stderr.on('data',(data) => {
+        console.error(data.toString())
     })
+    
+    
 })
 
 app.get('/company', (req,res)=>{
