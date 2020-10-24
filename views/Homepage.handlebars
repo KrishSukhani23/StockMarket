@@ -150,13 +150,13 @@ div.transbox h2 {
  
  
  
-  <div class="sidebar-container" id ="maindiv">
+  <div class="sidebar-container">
       <div class="sidebar-logo">
         StockKhareedo.com
       </div>
       <ul class="sidebar-navigation">
         <li class="header">Companies</li>
-        <form method="POST" action='company2'>
+        <form method="POST" action='company'>
           <input type="text" hidden value="0" name="id">
         <button id="0" class="comp">
           <a href="#tcs">
@@ -165,26 +165,20 @@ div.transbox h2 {
         
         </button>
         </form>
-        
-        <form method="POST" action='company2'>
+        <form method="POST" action='company'>
           <input type="text" hidden value="1" name="id">
         <button id="1" class="comp">
-          <a href="#eicher">
-            <i class="fa fa-home" aria-hidden="true"></i> Eicher Motors
+          <a href="#tcs">
+            <i class="fa fa-home" aria-hidden="true"></i> lol
           </a>
         
         </button>
         </form>
-        
-        <form method="POST" action='company2'>
-          <input type="text" hidden value="2" name="id">
         <button id="2" class="comp">
-          <a href="#hdf">
-            <i class="fa fa-home" aria-hidden="true"></i> HDFC Bank
+          <a href="#">
+            <i class="fa fa-users" aria-hidden="true"></i> HDFC Bank
           </a>
-        
         </button>
-        </form>
         <button id="3" class="comp">
           <a href="#">
             <i class="fa fa-cog" aria-hidden="true"></i> Britannia
@@ -239,18 +233,18 @@ div.transbox h2 {
 
     <script>
       $(document).on("click", "#0", function(){
-        
+        fetch('/company?id=0')
 });
 
 $(document).on("click", "#1", function(){
-        
-       
+        fetch('/company?id=1')
 });
+
 
 $( document ).ready(function() {
   id = "#{{id}}"
   $(id).addClass('compSelected')
 });
 
-    </script>
+</script>
    

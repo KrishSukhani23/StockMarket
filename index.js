@@ -15,11 +15,11 @@ app.use(express.static("public"))
 
 app.get('/', (req,res)=>{
     res.render('Homepage',{
-        id : 5
+        id : 3
     })
 })
 
-app.post("/company2",(req,res) => {
+app.post("/company",(req,res) => {
     console.log(req.body.id);
     res.render('Homepage',{
         id : req.body.id
