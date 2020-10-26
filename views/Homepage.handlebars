@@ -276,7 +276,16 @@ div.transbox h2 {
 
       let chartObj = new Chart(ch,{
         type : 'line',
-        data : [{{prices}}],
+        data : {
+          labels : [{{labels}}],
+          datasets : [
+            {
+              label : "Years",
+              data : [{{prices}}],
+              borderColor : "blue"
+            }
+          ]
+        },
         options : {
             title : {
                 display : true,
@@ -286,7 +295,11 @@ div.transbox h2 {
             legend : {
                 display:false
             },
-            
+            scales : {
+              xAxes : [{
+                stacked : true
+              }]
+            }
         }
       });
 

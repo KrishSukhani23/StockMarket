@@ -21,8 +21,10 @@ app.get('/', async(req,res)=>{
         
         revPrices = prices.reverse();
         let close = [];
+        labels = [];
         for(let i=0;i<revPrices.length;i+=1)
         {
+            labels.push(i);
             if(revPrices[i].close===null || revPrices[i].close===undefined)
                 continue;
             close.push(revPrices[i].close);
@@ -30,7 +32,8 @@ app.get('/', async(req,res)=>{
         console.log(close);
         res.render('Homepage',{
             id : 0,
-            prices : close
+            prices : close,
+            labels : labels
         })
     });
     
