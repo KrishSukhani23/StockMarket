@@ -134,4 +134,4 @@ plt.legend(['Train', 'Val', 'Predictions'], loc='lower right')
 plt.show()
 
 
-model.save('./saved_open/tcs')
+#model.save('./saved_open/tcs')
