@@ -3,6 +3,7 @@ var path = require('path');
 var exphbs = require('express-handlebars');
 const bodyParser = require('body-parser');
 const axios = require('axios');
+var yahooStockPrices = require('yahoo-stock-prices');
 const app = express();
 
 
@@ -15,12 +16,24 @@ app.use(express.static("public"))
 
 app.get('/', async(req,res)=>{
     console.log('Hii');
-    const data = await fetch('http://finance.yahoo.com/webservice/v1/symbols/TCS.NS/quote?format');
-    console.log("Hii2");
-    console.log(data)
-    res.render('Homepage',{
-        id : 3
-    })
+   
+    yahooStockPrices.getHistoricalPrices(1, 1, 2012, 10, 25, 2020, 'TCS.NS', '1d', function(err, prices){
+        
+        revPrices = prices.reverse();
+        let close = [];
+        for(let i=0;i<revPrices.length;i+=1)
+        {
+            if(revPrices[i].close===null || revPrices[i].close===undefined)
+                continue;
+            close.push(revPrices[i].close);
+        }
+        console.log(close);
+        res.render('Homepage',{
+            id : 0,
+            prices : close
+        })
+    });
+    
 })
 
 app.post("/company",(req,res) => {

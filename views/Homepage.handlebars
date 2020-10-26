@@ -257,27 +257,44 @@ div.transbox h2 {
         <div class="transbox text-center">
           <h2>{{id}}</h2>
           <h2>{{price}}</h2>
+          <canvas id="myChart"></canvas>
         </div>
     
-      
+
     
       </div>
     </div>
 
-
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
     <script>
-      $(document).on("click", "#0", function(){
-        fetch('/company?id=0')
-});
+      let cha = document.getElementById("myChart");
+      cha.height = 100;
+      let ch = cha.getContext("2d");
+      Chart.defaults.global.defaultFontFamily = 'Lato';
+      Chart.defaults.global.defaultFontSize = 12;
+      Chart.defaults.global.defaultFontColor = 'blue';
 
-$(document).on("click", "#1", function(){
-        fetch('/company?id=1')
-});
+      let chartObj = new Chart(ch,{
+        type : 'line',
+        data : [{{prices}}],
+        options : {
+            title : {
+                display : true,
+                text : 'Close Value',
+                fontSize : 25
+            },
+            legend : {
+                display:false
+            },
+            
+        }
+      });
 
 
 $( document ).ready(function() {
   id = "#{{id}}"
-  $(id).addClass('compSelected')
+  $(id).addClass('compSelected');
+  console.log([{{prices}}])
 });
 
 </script>
