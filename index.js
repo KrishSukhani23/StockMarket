@@ -13,7 +13,11 @@ app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 app.use(express.static("public"))
 
-app.get('/', (req,res)=>{
+app.get('/', async(req,res)=>{
+    console.log('Hii');
+    const data = await fetch('http://finance.yahoo.com/webservice/v1/symbols/TCS.NS/quote?format');
+    console.log("Hii2");
+    console.log(data)
     res.render('Homepage',{
         id : 5
     })
