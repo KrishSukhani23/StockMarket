@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 from datetime import datetime
 import sys
 
-company = ['tcs']
+company = ['tcs','eichermotors','hdfcbank','britannia','bajajfinance','asianpaints','unilever','tatamotors','wipro','reliance']
 
 a = datetime.today().strftime('%Y-%m-%d')
 
@@ -18,7 +18,7 @@ scaler = MinMaxScaler(feature_range=(0, 1))
 
 model = load_model('./saved_model/' + company[int(sys.argv[1])])
 
-predictstock = ['TCS.NS']
+predictstock = ['TCS.NS','EICHERMOT.NS','HDFCBANK.NS','BRITANNIA.NS','BAJFINANCE.NS','ASIANPAINT.NS','HINDUNILVR.NS','TATAMOTORS.NS','WIPRO.NS','RELIANCE.NS']
 
 apple_quote = web.DataReader( predictstock[int(sys.argv[1])], data_source='yahoo', start='2020-01-01', end=a)
 #Create a new dataframe

@@ -17,7 +17,7 @@ from datetime import datetime
 a = datetime.today().strftime('%Y-%m-%d')
 
 
-df = web.DataReader('TCS.NS', data_source='yahoo', start='2012-01-01', end=a) 
+df = web.DataReader('RELIANCE.NS', data_source='yahoo', start='2012-01-01', end=a) 
 # #Show the data 
 print(df.shape)
 
@@ -59,7 +59,7 @@ model.add(Dense(units=1))
 model.compile(optimizer='adam', loss='mean_squared_error')
 
 
-model.fit(x_train, y_train, batch_size=1, epochs=1)
+model.fit(x_train, y_train, batch_size=1, epochs=4)
 
 
 
@@ -92,7 +92,7 @@ print(rmse)
 
 
 
-apple_quote = web.DataReader('TCS.NS', data_source='yahoo', start='2020-01-01', end=a)
+apple_quote = web.DataReader('RELIANCE.NS', data_source='yahoo', start='2020-01-01', end=a)
 #Create a new dataframe
 new_df = apple_quote.filter(['Close'])
 #Get teh last 60 day closing price 
@@ -114,7 +114,7 @@ pred_price = scaler.inverse_transform(pred_price)
 print(pred_price)
 
 
-apple_quote2 = web.DataReader('TCS.NS', data_source='yahoo', start='2020-10-19', end=a)
+apple_quote2 = web.DataReader('RELIANCE.NS', data_source='yahoo', start='2020-10-19', end=a)
 print(apple_quote2['Close'])
 
 
@@ -133,5 +133,5 @@ print(apple_quote2['Close'])
 # plt.show()
 
 
-model.save('./saved_model/tcs')
+model.save('./saved_model/reliance')
 
