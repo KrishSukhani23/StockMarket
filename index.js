@@ -16,39 +16,91 @@ app.use(express.static("public"))
 
 app.get('/', async(req,res)=>{
     console.log('Hii');
-   
-    yahooStockPrices.getHistoricalPrices(1, 1, 2012, 10, 25, 2020, 'TCS.NS', '1d', function(err, prices){
+    const predictstockone = ['TCS.NS','EICHERMOT.NS','HDFCBANK.NS','BRITANNIA.NS','BAJFINANCE.NS','ASIANPAINT.NS','HINDUNILVR.NS','TATAMOTORS.NS','WIPRO.NS','RELIANCE.NS']
+
+
+    yahooStockPrices.getHistoricalPrices(1, 1, 2012, 10, 25, 2020, predictstockone[0], '1d', function(err, prices){
         
         revPrices = prices.reverse();
         let close = [];
-        labels = [];
+        // let date = new Date(1970,0,1);
+        // date.setSeconds(revPrices[0].date);
+        // console.log(date.toString());
+        labels2 = [];
         for(let i=0;i<revPrices.length;i+=1)
         {
-            labels.push(i);
             if(revPrices[i].close===null || revPrices[i].close===undefined)
                 continue;
+            // date = new Date(1970,0,1);
+            // date.setSeconds(revPrices[i].date);
+            // labels.push(date.toString());
+            labels2.push(i);
             close.push(revPrices[i].close);
         }
-        console.log(close);
+       
         res.render('Homepage',{
-            id : 0,
+            id : req.query.id,
             prices : close,
-            labels : labels
+            // labels : labels,
+            labels2 : labels2
         })
     });
     
 })
 
 app.post("/company",(req,res) => {
-    console.log(req.body.id);
-    const spawn = require('child_process').spawn
+    // console.log(req.body.id);
+    // const spawn = require('child_process').spawn
+    // const pythonProcess = spawn('python',['./predict.py' , req.body.id])
+
+    // pythonProcess.stdout.on('data', (data) => {
+    //     console.log(data.toString());
+    //     res.render('Homepage',{
+    //         id : req.body.id,
+    //         price: data.toString()
+    //     })
+        
+    // })  
+    
+
+    // pythonProcess.stderr.on('data',(data) => {
+    //     console.error(data.toString())
+    // })
+
+    const predictstockone = ['TCS.NS','EICHERMOT.NS','HDFCBANK.NS','BRITANNIA.NS','BAJFINANCE.NS','ASIANPAINT.NS','HINDUNILVR.NS','TATAMOTORS.NS','WIPRO.NS','RELIANCE.NS']
+
+
+    yahooStockPrices.getHistoricalPrices(1, 1, 2012, 10, 25, 2020, predictstockone[parseInt(req.body.id)], '1d', function(err, prices){
+        
+        revPrices = prices.reverse();
+        let close = [];
+        // labels = [];
+        // let date = new Date(1970,0,1);
+        // date.setSeconds(revPrices[0].date);
+        // console.log(date.toString());
+        labels2 = [];
+        for(let i=0;i<revPrices.length;i+=1)
+        {
+            if(revPrices[i].close===null || revPrices[i].close===undefined)
+                continue;
+            // date = new Date(1970,0,1);
+            // date.setSeconds(revPrices[i].date);
+            // labels.push(date.toString());
+            labels2.push(i);
+            close.push(revPrices[i].close);
+        }
+       
+        const spawn = require('child_process').spawn
     const pythonProcess = spawn('python',['./predict.py' , req.body.id])
 
     pythonProcess.stdout.on('data', (data) => {
         console.log(data.toString());
         res.render('Homepage',{
-            id : req.body.id,
-            price: data.toString()
+            price : data.toString(),
+            id : req.query.id,
+            prices : close,
+            // labels : labels,
+            labels2 : labels2
         })
         
     })  
@@ -57,6 +109,10 @@ app.post("/company",(req,res) => {
     pythonProcess.stderr.on('data',(data) => {
         console.error(data.toString())
     })
+
+
+        
+    });
     
     
 })
