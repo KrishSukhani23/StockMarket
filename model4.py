@@ -18,7 +18,7 @@ from datetime import datetime
 a = datetime.today().strftime('%Y-%m-%d')
 
 
-df = web.DataReader('TCS.NS', data_source='yahoo', start='2012-01-01', end=a) 
+df = web.DataReader('RELIANCE.NS', data_source='yahoo', start='2012-01-01', end=a) 
 # #Show the data 
 print(df.shape)
 
@@ -60,7 +60,7 @@ model.add(Dense(units=1))
 model.compile(optimizer='adam', loss='mean_squared_error')
 
 
-model.fit(x_train, y_train, batch_size=1, epochs=1)
+model.fit(x_train, y_train, batch_size=1, epochs=3)
 
 
 
@@ -93,7 +93,7 @@ print(rmse)
 
 
 
-apple_quote = web.DataReader('TCS.NS', data_source='yahoo', start='2020-01-01', end='2020-10-15')
+apple_quote = web.DataReader('RELIANCE.NS', data_source='yahoo', start='2020-01-01', end='2020-10-15')
 #Create a new dataframe
 new_df = apple_quote.filter(['Open'])
 #Get teh last 60 day closing price 
@@ -115,23 +115,23 @@ pred_price = scaler.inverse_transform(pred_price)
 print(pred_price)
 
 
-apple_quote2 = web.DataReader('TCS.NS', data_source='yahoo', start='2020-10-19', end=a)
+apple_quote2 = web.DataReader('RELIANCE.NS', data_source='yahoo', start='2020-10-19', end=a)
 print(apple_quote2['Open'])
 
 
-#Plot/Create the data for the graph
-train = data[:training_data_len]
-valid = data[training_data_len:]
-valid['Predictions'] = predictions
-#Visualize the data
-plt.figure(figsize=(16,8))
-plt.title('Model')
-plt.xlabel('Date', fontsize=18)
-plt.ylabel('Opening Price INR (₹)', fontsize=18)
-plt.plot(train['Open'])
-plt.plot(valid[['Open', 'Predictions']])
-plt.legend(['Train', 'Val', 'Predictions'], loc='lower right')
-plt.show()
+# #Plot/Create the data for the graph
+# train = data[:training_data_len]
+# valid = data[training_data_len:]
+# valid['Predictions'] = predictions
+# #Visualize the data
+# plt.figure(figsize=(16,8))
+# plt.title('Model')
+# plt.xlabel('Date', fontsize=18)
+# plt.ylabel('Opening Price INR (₹)', fontsize=18)
+# plt.plot(train['Open'])
+# plt.plot(valid[['Open', 'Predictions']])
+# plt.legend(['Train', 'Val', 'Predictions'], loc='lower right')
+# plt.show()
 
 
-#model.save('./saved_open/tcs')
+model.save('./saved_open/reliance')

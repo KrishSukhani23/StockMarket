@@ -14,7 +14,28 @@ app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 app.use(express.static("public"))
 
-app.get('/', async(req,res)=>{
+
+app.get('/', (req,res)=>{
+    return res.render('login')
+})
+
+app.get('/login', (req, res) => {
+    //Serves the body of the page aka "main1.handlebars" to the container //aka "index.handlebars"
+    res.render('login');
+    });
+
+    
+    app.get('/register', (req, res) => {
+        //Serves the body of the page aka "main1.handlebars" to the container //aka "index.handlebars"
+        res.render('index');
+        });
+
+        app.get('/abc', (req, res) => {
+            //Serves the body of the page aka "main1.handlebars" to the container //aka "index.handlebars"
+            res.render('Homepage');
+            });
+
+app.get('/Homepage', async(req,res)=>{
     console.log('Hii');
     const predictstockone = ['TCS.NS','EICHERMOT.NS','HDFCBANK.NS','BRITANNIA.NS','BAJFINANCE.NS','ASIANPAINT.NS','HINDUNILVR.NS','TATAMOTORS.NS','WIPRO.NS','RELIANCE.NS']
 
@@ -124,6 +145,44 @@ app.get('/company', (req,res)=>{
     })
 })
 
+app.post('/buy',async(req, res)=>{
+    console.log(req.body.token)
+    console.log(req.body.email)
+    console.log(req.body.quantity)
+
+    // const obj = {
+    //     'pat1': req.body.token,
+    // }
+    // const response1 = await axios.patch('https://virtual-clinic-57b51.firebaseio.com/doctorInfo/one.json',obj);
+    
+    // const response = await axios.get('https://virtual-clinic-57b51.firebaseio.com/userInfo.json');
+    // name1 = ''
+    // for(var key in response.data)
+    // {
+
+    //     var user = response.data[key];
+    //     if(user.email === req.body.token)
+    //     {
+    //         name1=key
+    //         const obj = {
+    //             'doctor': 'one',
+    //         }
+    //         const response = await axios.patch(`https://virtual-clinic-57b51.firebaseio.com/userInfo/${name1}.json`, obj);
+            
+    //         console.log("Hi");
+    //      }
+    //     } 
+
+
+    return res.redirect('/login')
+
+
+
+
+    
+    
+})
+
 
 
 app.post('/login',async(req, res)=>{
@@ -135,7 +194,7 @@ app.post('/login',async(req, res)=>{
         if(user.email === req.body.email && user.password === req.body.password)
         {
             
-            return res.render('Homepage',{id:0})
+            return res.render('Homepage',{id:0, email : user.email, wallet: user.wallet })
         }
     } 
 })
@@ -162,7 +221,7 @@ app.post('/register',async(req, res)=>{
         'email': req.body.email,
         'password': req.body.password,
         'contact': req.body.contact,
-        'wallet': 0,
+        'wallet': 50000,
     }
     const response = await axios.post('https://stockprediction-5e4ce.firebaseio.com/userInfo.json', obj);
     console.log(response);

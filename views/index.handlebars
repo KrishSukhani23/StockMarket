@@ -23,13 +23,13 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700);
 
 body {
-  background-image: url(/stock-market/mainpage.jpg);
+  background-image: url(/images/login.jpg);
   font-family: 'Open Sans', sans-serif;
 }
 
 .login {
   width: 400px;
-  margin: 16px auto;
+  margin: 120px auto;
   font-size: 16px;
 }
 
@@ -46,11 +46,11 @@ body {
   margin-right: auto;
   margin-left: auto;
   border: 12px solid transparent;
-  border-bottom-color: #28d;
+  border-bottom-color: rgb(224, 42, 42);
 }
 
 .login-header {
-  background: #28d;
+  background: rgb(224, 42, 42);
   padding: 20px;
   font-size: 1.4em;
   font-weight: normal;
@@ -95,21 +95,22 @@ body {
 }
 
 .login input[type="submit"] {
-  background: #28d;
+  background: rgb(224, 42, 42);
   border-color: transparent;
   color: #fff;
   cursor: pointer;
 }
 
 .login input[type="submit"]:hover {
-  background: #17c;
+  background: rgb(209, 59, 59);
 }
 
 /* Buttons' focus effect */
 .login input[type="submit"]:focus {
-  border-color: #05a;
+  border-color: rgb(197, 60, 60);
 }
 </style>
+
 
 <div class="login">
   <div class="login-triangle"></div>
@@ -121,5 +122,7 @@ body {
     <p><input name="password" type="password" placeholder="Password"></p>
     <p><input name="contact" type="number" placeholder="Mobile Number"></p>
     <p><input type="submit" value="Register"></p>
+         <p>Already a member?    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;     <a href="/login">Login</a></p> 
+
   </form>
 </div>

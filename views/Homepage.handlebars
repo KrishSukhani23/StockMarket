@@ -94,11 +94,11 @@
   }
 
   div.transbox {
-  margin: 70px;
+  margin: 50px;
   background-color: #ffffff;
   border: 2px solid black;
   opacity: 0.7;
-  height:650px
+  height:670px
 }
 
 div.transbox h2 {
@@ -142,13 +142,53 @@ div.transbox h2 {
   color: white;
   text-emphasis: bold;
 }
-
+.navbar-nav > li{
+  margin-left:60px;
+  margin-right:60px;
+}
+.btn{
+  padding: 8px 20px;
+  margin: 15px;
+  opacity: 1;
+}
 
 
   </style>  
  
- 
- 
+
+
+ <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+  <a class="navbar-brand" href="#">StockKhareedo.com</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav ml-auto pd-6">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">My Profile</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Transaction History</a>
+      </li>
+      <li class="nav-item active">
+        
+        <a class="nav-link" href="#">Wallet : {{wallet}}</a>
+      </li>
+      <li class="nav-item dropdown active">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Welcome, {{email}}
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="/login">Logout</a>
+
+        </div>
+      </li>
+      
+    </ul>
+    
+  </div>
+</nav>
  
   <div class="sidebar-container">
       <div class="sidebar-logo">
@@ -160,7 +200,7 @@ div.transbox h2 {
           <input type="text" hidden value="0" name="id">
         <button id="0" class="comp">
           <a href="#">
-            <i class="fa fa-home" aria-hidden="true"></i> TCS
+             TCS
           </a>
         
         </button>
@@ -169,7 +209,7 @@ div.transbox h2 {
           <input type="text" hidden value="1" name="id">
         <button id="1" class="comp">
           <a href="#">
-            <i class="fa fa-home" aria-hidden="true"></i> Eicher Motors
+             Eicher Motors
           </a>
         
         </button>
@@ -178,7 +218,7 @@ div.transbox h2 {
           <input type="text" hidden value="2" name="id">
         <button id="2" class="comp">
           <a href="#">
-            <i class="fa fa-users" aria-hidden="true"></i> HDFC Bank
+             HDFC Bank
           </a>
         
         </button>
@@ -187,7 +227,7 @@ div.transbox h2 {
           <input type="text" hidden value="3" name="id">
         <button id="3" class="comp">
           <a href="#">
-            <i class="fa fa-cog" aria-hidden="true"></i> Britannia
+             Britannia
           </a>
         
         </button>
@@ -196,7 +236,7 @@ div.transbox h2 {
           <input type="text" hidden value="4" name="id">
         <button id="4" class="comp">
           <a href="#">
-            <i class="fa fa-info-circle" aria-hidden="true"></i> Bajaj Finance
+            Bajaj Finance
           </a>
         
         </button>
@@ -205,7 +245,7 @@ div.transbox h2 {
           <input type="text" hidden value="5" name="id">
         <button id="5" class="comp">
           <a href="#">
-              <i class="fa fa-info-circle" aria-hidden="true"></i> Asian Paints
+              Asian Paints
           </a>
         
         </button>
@@ -214,7 +254,7 @@ div.transbox h2 {
           <input type="text" hidden value="6" name="id">
         <button id="6" class="comp">
           <a href="#">
-              <i class="fa fa-info-circle" aria-hidden="true"></i> Hindustan Unilever
+              Hindustan Unilever
           </a>
         
         </button>
@@ -223,7 +263,7 @@ div.transbox h2 {
           <input type="text" hidden value="7" name="id">
         <button id="7" class="comp">
           <a href="#">
-              <i class="fa fa-info-circle" aria-hidden="true"></i> Tata Motors
+              Tata Motors
           </a>
         
         </button>
@@ -232,7 +272,7 @@ div.transbox h2 {
           <input type="text" hidden value="8" name="id">
         <button id="8" class="comp">
           <a href="#">
-              <i class="fa fa-info-circle" aria-hidden="true"></i> Wipro
+              Wipro
           </a>
         
         </button>
@@ -241,7 +281,7 @@ div.transbox h2 {
           <input type="text" hidden value="9" name="id">
         <button id="9" class="comp">
           <a href="#">
-              <i class="fa fa-info-circle" aria-hidden="true"></i> Reliance
+              Reliance
           </a>
         
         </button>
@@ -255,10 +295,72 @@ div.transbox h2 {
       <div class="container-fluid">
 
         <div class="transbox text-center">
-          
-          <h2>Predicted Closing Price for 29th October : {{price}}</h2>
+          <br>
+          <br>
+          <h3>Predicted Closing Price for 9th November : {{price}}</h3><br>
+          <center><h4>Graph(Closing Price)</h4></center><br>
           <canvas id="myChart"></canvas>
+          <br>
+          <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Buy</button>
+          <button class="btn btn-success" data-toggle="modal" data-target="#exampleModalone">Sell</button>
+
         </div>
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <form method="POST" action="/buy">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Buy</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                  <input type="text" name="token" value="" id="token" hidden></input>
+                  <input type="text" name="email" value="" id="email" hidden></input>
+
+              <label for="quantity">Quantity:</label>
+              <input type="number" id="quantity" name="quantity"
+                min="1" max="15">
+
+              
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary">Buy</button>
+            </div>
+          </div>
+        </div>
+        </form>
+      </div>
+
+<div class="modal fade" id="exampleModalone" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <form method="POST" action="/sell">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Sell</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                  <input type="text" name="token" value="" id="token" hidden></input>
+                  <input type="text" name="email" value="" id="email" hidden></input>
+
+              <label for="quantity">Quantity:</label>
+              <input type="number" id="quantity" name="quantity"
+                min="1" max="15">
+
+              
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary">Sell</button>
+            </div>
+          </div>
+        </div>
+        </form>
+      </div>
+
     
 
     
@@ -313,7 +415,16 @@ $( document ).ready(function() {
   id = "#{{id}}"
   $(id).addClass('compSelected');
   console.log([{{prices}}])
+
+  document.getElementById('email').value = '{{email}}';
+  document.getElementById('token').value = '{{price}}';
+
 });
+
+
+
+
+
 
 </script>
    
