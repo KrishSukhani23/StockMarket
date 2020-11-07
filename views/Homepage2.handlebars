@@ -169,7 +169,8 @@ div.transbox h2 {
         <a class="nav-link" href="#">My Profile</a>
       </li>
       <li class="nav-item active">
-         <form method="POST"  action="transaction" >
+         <form method="POST"  action="/transaction" >
+          <input type="text" name="email" value="{{email}}" id="email" hidden></input>
           <button type="submit">Transaction History</button>
         </form>
       </li>
@@ -323,7 +324,7 @@ div.transbox h2 {
             </div>
             <div class="modal-body">
                   <input type="text" name="token" value="" id="token" hidden></input>
-                  <input type="text" name="email" value="" id="email" hidden></input>
+                  <input type="text" name="email" value="{{email}}" id="email" hidden></input>
                   <input type="text" name="id" value="{{id}}" hidden></input>
               <label for="quantity">Quantity:</label>
               <input type="number" id="quantity" name="quantity"
@@ -339,6 +340,7 @@ div.transbox h2 {
         </form>
       </div>
 
+
 <div class="modal fade" id="exampleModalone" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <form method="POST" action="/sell">
         <div class="modal-dialog" role="document">
@@ -350,9 +352,9 @@ div.transbox h2 {
               </button>
             </div>
             <div class="modal-body">
-                  <input type="text" name="token" value="" id="token" hidden></input>
-                  <input type="text" name="email" value="" id="email" hidden></input>
-
+                  <input type="text" name="token" value="{{price}}" id="token" hidden></input>
+                  <input type="text" name="email" value="{{email}}" id="email" hidden></input>
+                  <input type="text" name="id" value="{{id}}" hidden />
               <label for="quantity">Quantity:</label>
               <input type="number" id="quantity" name="quantity"
                 min="1" max="15">
@@ -366,6 +368,7 @@ div.transbox h2 {
         </div>
         </form>
       </div>
+
 
     
 
@@ -469,8 +472,6 @@ $( document ).ready(function() {
     console.log('Hello');
     localStorage.setItem('email','{{email}}');
   }
-  let em = localStorage.getItem('email');
-  document.getElementById('email').value = em;
   document.getElementById('token').value = {{price}};
 
 });

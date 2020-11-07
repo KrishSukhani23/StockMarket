@@ -16,6 +16,7 @@ app.use(express.static("public"))
 
 
 app.get('/', (req,res)=>{
+    
     return res.render('login')
 })
 
@@ -115,12 +116,12 @@ app.post("/company",(req,res) => {
         }
        
     const spawn = require('child_process').spawn
-    const pythonProcess = spawn('python3',['./predict.py' , req.body.id])
+    const pythonProcess = spawn('python',['./predict.py' , req.body.id])
 
     pythonProcess.stdout.on('data', (data) => {
         console.log(data.toString());
 
-        const pythonProcess2 = spawn('python3',['./predictopen.py' , req.body.id]);
+        const pythonProcess2 = spawn('python',['./predictopen.py' , req.body.id]);
         pythonProcess2.stdout.on('data',(data2) => {
             console.log(data2.toString());
 
@@ -163,30 +164,117 @@ app.post('/buy',async(req, res)=>{
     console.log(req.body.token)
     console.log(req.body.email)
     console.log(req.body.quantity)
-    console.log(req.body.id);
+    console.log(req.body);
 
-    // const obj = {
-    //     'pat1': req.body.token,
-    // }
-    // const response1 = await axios.patch('https://virtual-clinic-57b51.firebaseio.com/doctorInfo/one.json',obj);
+    company = ['Tcs','EicherMotors','HdfcBank','Britannia','BajajFinance','AsianPaints','Unilever','TataMotors','Wipro','Reliance']
+
+
+    const obj = {
+        'email' : req.body.email,
+        'company' : company[req.body.id],
+        'price': req.body.token,
+        'quantity' : req.body.quantity,
+        'time' : new  Date().toString(),
+        'buysell': true
+        
+        
+    }
+    const response1 = await axios.post('https://stockprediction-5e4ce.firebaseio.com/transactionInfo.json',obj);
+
+
+
+    const response = await axios.get('https://stockprediction-5e4ce.firebaseio.com/userInfo.json');
+
+    name1 = ''
+
     
     // const response = await axios.get('https://virtual-clinic-57b51.firebaseio.com/userInfo.json');
-    // name1 = ''
-    // for(var key in response.data)
-    // {
+    var a;
+    a = (req.body.token - 0) * (req.body.quantity - 0)
+    for(var key in response.data)
+    {
 
-    //     var user = response.data[key];
-    //     if(user.email === req.body.token)
-    //     {
-    //         name1=key
-    //         const obj = {
-    //             'doctor': 'one',
-    //         }
-    //         const response = await axios.patch(`https://virtual-clinic-57b51.firebaseio.com/userInfo/${name1}.json`, obj);
+        var user = response.data[key];
+        if(user.email === req.body.email)
+        {
+            name1=key
+            var updated_wallet = (user.wallet- 0 ) - a
+            console.log(user.wallet)
+            console.log(a)
+            console.log(updated_wallet)
+            const obj1 = {
+                'wallet' : updated_wallet ,
+            }
             
-    //         console.log("Hi");
-    //      }
-    //     } 
+
+            const response = await axios.patch(`https://stockprediction-5e4ce.firebaseio.com/userInfo/${name1}.json`, obj1);
+            
+            console.log("Hi");
+         }
+        } 
+
+
+    return res.redirect('/login')
+
+
+
+
+    
+    
+})
+
+app.post('/sell',async(req, res)=>{
+    console.log(req.body.token)
+    console.log(req.body.email)
+    console.log(req.body.quantity)
+    console.log(req.body.id);
+
+    company = ['Tcs','EicherMotors','HdfcBank','Britannia','BajajFinance','AsianPaints','Unilever','TataMotors','Wipro','Reliance']
+
+
+    const obj = {
+        'email' : req.body.email,
+        'company' : company[req.body.id],
+        'price': req.body.token,
+        'quantity' : req.body.quantity,
+        'time' : new  Date().toString(),
+        'buysell': false
+        
+        
+    }
+    const response1 = await axios.post('https://stockprediction-5e4ce.firebaseio.com/transactionInfo.json',obj);
+
+
+
+    const response = await axios.get('https://stockprediction-5e4ce.firebaseio.com/userInfo.json');
+
+    name1 = ''
+
+    
+    // const response = await axios.get('https://virtual-clinic-57b51.firebaseio.com/userInfo.json');
+    var a;
+    a = (req.body.token - 0) * (req.body.quantity - 0)
+    for(var key in response.data)
+    {
+
+        var user = response.data[key];
+        if(user.email === req.body.email)
+        {
+            name1=key
+            var updated_wallet = (user.wallet- 0 ) + a
+            console.log(user.wallet)
+            console.log(a)
+            console.log(updated_wallet)
+            const obj1 = {
+                'wallet' : updated_wallet ,
+            }
+            
+
+            const response = await axios.patch(`https://stockprediction-5e4ce.firebaseio.com/userInfo/${name1}.json`, obj1);
+            
+            console.log("Hi");
+        } 
+    }
 
 
     return res.redirect('/login')
@@ -199,8 +287,27 @@ app.post('/buy',async(req, res)=>{
 })
 
 
-app.post('/transaction',(req,res) => {
-    res.render('transaction');
+
+
+app.post('/transaction',async(req,res) => {
+    
+    const response = await axios.get('https://stockprediction-5e4ce.firebaseio.com/transactionInfo.json');
+    transactions = []
+
+    for(var key in response.data)
+    {
+        var trans = response.data[key];
+        
+        if(trans.email === req.body.email)
+        {
+            transactions.push(trans)
+        
+        }
+
+    } 
+    console.log(transactions)
+
+    res.render('transaction',{'transactions_array' : transactions});
 })
 
 
@@ -237,12 +344,12 @@ app.post('/login',async(req, res)=>{
                 }
                
             const spawn = require('child_process').spawn
-            const pythonProcess = spawn('python3',['./predict.py' , 0])
+            const pythonProcess = spawn('python',['./predict.py' , 0])
         
             pythonProcess.stdout.on('data', (data) => {
                 console.log(data.toString());
 
-                const pythonProcess2 = spawn('python3',['./predictopen.py' , 0])
+                const pythonProcess2 = spawn('python',['./predictopen.py' , 0])
                 pythonProcess2.stdout.on('data', (data2) => {
                     console.log(data2.toString());
                     res.render('Homepage2',{
@@ -301,7 +408,7 @@ app.post('/register',async(req, res)=>{
     }
     const response = await axios.post('https://stockprediction-5e4ce.firebaseio.com/userInfo.json', obj);
     console.log(response);
-    return response;
+    return res.render("login");
 })
 
 app.listen(5000,()=>{

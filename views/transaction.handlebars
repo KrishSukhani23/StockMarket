@@ -1,1 +1,20 @@
 <h1>Transaction</h1>
+
+<table>
+    <tr>
+        <th>StockName</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>TimeStamp</th>
+        <th>Buy/Sell</th>
+    </tr>
+    {{#each transactions_array}}
+    <tr>
+        <td>{{company}}</td>
+        <td>{{price}}</td>
+        <td>{{quantity}}</td>
+        <td>{{time}}</td>
+        <td>{{buysell}}</td>
+    </tr>
+    {{/each}}
+</table>
