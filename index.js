@@ -70,6 +70,7 @@ app.get('/Homepage', async(req,res)=>{
 })
 
 app.post("/company",(req,res) => {
+    console.log(req.query.email);
     // console.log(req.body.id);
     // const spawn = require('child_process').spawn
     // const pythonProcess = spawn('python',['./predict.py' , req.body.id])
@@ -95,6 +96,7 @@ app.post("/company",(req,res) => {
         
         revPrices = prices.reverse();
         let close = [];
+        let open = [];
         // labels = [];
         // let date = new Date(1970,0,1);
         // date.setSeconds(revPrices[0].date);
@@ -109,20 +111,32 @@ app.post("/company",(req,res) => {
             // labels.push(date.toString());
             labels2.push(i);
             close.push(revPrices[i].close);
+            open.push(revPrices[i].open);
         }
        
-        const spawn = require('child_process').spawn
-    const pythonProcess = spawn('python',['./predict.py' , req.body.id])
+    const spawn = require('child_process').spawn
+    const pythonProcess = spawn('python3',['./predict.py' , req.body.id])
 
     pythonProcess.stdout.on('data', (data) => {
         console.log(data.toString());
-        res.render('Homepage',{
-            price : data.toString(),
-            id : req.query.id,
-            prices : close,
-            // labels : labels,
-            labels2 : labels2
+
+        const pythonProcess2 = spawn('python3',['./predictopen.py' , req.body.id]);
+        pythonProcess2.stdout.on('data',(data2) => {
+            console.log(data2.toString());
+
+            res.render('Homepage',{
+                email : req.query.email,
+                price : data.toString(),
+                openPrice : data2.toString(),
+                id : req.body.id,
+                prices : close,
+                pricesOpen : open,
+                wallet : req.query.wallet,
+                // labels : labels,
+                labels2 : labels2
+            })
         })
+        
         
     })  
     
@@ -149,6 +163,7 @@ app.post('/buy',async(req, res)=>{
     console.log(req.body.token)
     console.log(req.body.email)
     console.log(req.body.quantity)
+    console.log(req.body.id);
 
     // const obj = {
     //     'pat1': req.body.token,
@@ -184,6 +199,11 @@ app.post('/buy',async(req, res)=>{
 })
 
 
+app.post('/transaction',(req,res) => {
+    res.render('transaction');
+})
+
+
 
 app.post('/login',async(req, res)=>{
     const response = await axios.get('https://stockprediction-5e4ce.firebaseio.com/userInfo.json');
@@ -194,7 +214,63 @@ app.post('/login',async(req, res)=>{
         if(user.email === req.body.email && user.password === req.body.password)
         {
             
-            return res.render('Homepage',{id:0, email : user.email, wallet: user.wallet })
+            yahooStockPrices.getHistoricalPrices(1, 1, 2012, 10, 25, 2020, 'TCS.NS', '1d', function(err, prices){
+        
+                revPrices = prices.reverse();
+                let close = [];
+                let open = [];
+                // labels = [];
+                // let date = new Date(1970,0,1);
+                // date.setSeconds(revPrices[0].date);
+                // console.log(date.toString());
+                labels2 = [];
+                for(let i=0;i<revPrices.length;i+=1)
+                {
+                    if(revPrices[i].close===null || revPrices[i].close===undefined)
+                        continue;
+                    // date = new Date(1970,0,1);
+                    // date.setSeconds(revPrices[i].date);
+                    // labels.push(date.toString());
+                    labels2.push(i);
+                    close.push(revPrices[i].close);
+                    open.push(revPrices[i].open);
+                }
+               
+            const spawn = require('child_process').spawn
+            const pythonProcess = spawn('python3',['./predict.py' , 0])
+        
+            pythonProcess.stdout.on('data', (data) => {
+                console.log(data.toString());
+
+                const pythonProcess2 = spawn('python3',['./predictopen.py' , 0])
+                pythonProcess2.stdout.on('data', (data2) => {
+                    console.log(data2.toString());
+                    res.render('Homepage2',{
+                        email : user.email,
+                        price : data.toString(),
+                        openPrice : data2.toString(),
+                        id : 0,
+                        wallet : user.wallet,
+                        prices : close,
+                        pricesOpen : open,
+                        // labels : labels,
+                        labels2 : labels2
+                    })
+                })
+
+                
+                
+            })  
+            
+        
+            pythonProcess.stderr.on('data',(data) => {
+                console.error(data.toString())
+            })
+        
+        
+                
+            });
+            
         }
     } 
 })
