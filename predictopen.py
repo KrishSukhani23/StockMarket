@@ -20,7 +20,7 @@ model = load_model('./saved_open/' + company[int(sys.argv[1])])
 
 predictstock = ['TCS.NS','EICHERMOT.NS','HDFCBANK.NS','BRITANNIA.NS','BAJFINANCE.NS','ASIANPAINT.NS','HINDUNILVR.NS','TATAMOTORS.NS','WIPRO.NS','RELIANCE.NS']
 
-apple_quote = web.DataReader( predictstock[int(sys.argv[1])], data_source='yahoo', start='2020-01-01', end=a)
+apple_quote = web.DataReader( predictstock[int(sys.argv[1])], data_source='yahoo', start='2020-08-08', end=a)
 #Create a new dataframe
 new_df = apple_quote.filter(['Open'])
 #Get teh last 60 day closing price 

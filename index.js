@@ -17,8 +17,10 @@ app.use(express.static("public"))
 
 app.get('/', (req,res)=>{
     
-    return res.render('login')
+    return res.render('landing')
 })
+
+
 
 app.get('/login', (req, res) => {
     //Serves the body of the page aka "main1.handlebars" to the container //aka "index.handlebars"
@@ -41,7 +43,7 @@ app.get('/Homepage', async(req,res)=>{
     const predictstockone = ['TCS.NS','EICHERMOT.NS','HDFCBANK.NS','BRITANNIA.NS','BAJFINANCE.NS','ASIANPAINT.NS','HINDUNILVR.NS','TATAMOTORS.NS','WIPRO.NS','RELIANCE.NS']
 
 
-    yahooStockPrices.getHistoricalPrices(1, 1, 2012, 10, 25, 2020, predictstockone[0], '1d', function(err, prices){
+    yahooStockPrices.getHistoricalPrices(1, 1, 2018, 10, 25, 2020, predictstockone[0], '1d', function(err, prices){
         
         revPrices = prices.reverse();
         let close = [];
@@ -93,7 +95,7 @@ app.post("/company",(req,res) => {
     const predictstockone = ['TCS.NS','EICHERMOT.NS','HDFCBANK.NS','BRITANNIA.NS','BAJFINANCE.NS','ASIANPAINT.NS','HINDUNILVR.NS','TATAMOTORS.NS','WIPRO.NS','RELIANCE.NS']
 
 
-    yahooStockPrices.getHistoricalPrices(1, 1, 2012, 10, 25, 2020, predictstockone[parseInt(req.body.id)], '1d', function(err, prices){
+    yahooStockPrices.getHistoricalPrices(1, 1, 2018, 10, 25, 2020, predictstockone[parseInt(req.body.id)], '1d', function(err, prices){
         
         revPrices = prices.reverse();
         let close = [];
@@ -175,7 +177,7 @@ app.post('/buy',async(req, res)=>{
         'price': req.body.token,
         'quantity' : req.body.quantity,
         'time' : new  Date().toString(),
-        'buysell': true
+        'buysell': "Buy",
         
         
     }
@@ -238,7 +240,7 @@ app.post('/sell',async(req, res)=>{
         'price': req.body.token,
         'quantity' : req.body.quantity,
         'time' : new  Date().toString(),
-        'buysell': false
+        'buysell': "Sell",
         
         
     }
@@ -321,7 +323,7 @@ app.post('/login',async(req, res)=>{
         if(user.email === req.body.email && user.password === req.body.password)
         {
             
-            yahooStockPrices.getHistoricalPrices(1, 1, 2012, 10, 25, 2020, 'TCS.NS', '1d', function(err, prices){
+            yahooStockPrices.getHistoricalPrices(1, 1, 2018, 10, 25, 2020, 'TCS.NS', '1d', function(err, prices){
         
                 revPrices = prices.reverse();
                 let close = [];

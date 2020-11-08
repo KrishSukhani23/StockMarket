@@ -1,11 +1,22 @@
   
 
 <style>
+.buttonss {
+  background: none!important;
+  border: none;
+  padding-top: 9px;
+  /*optional*/
+  font-family: arial, sans-serif;
+  /*input has OS specific font-family*/
+  color: rgb(252, 252, 252);
+  text-decoration: none;
+
+  cursor: pointer;
+}
 
   body{
       background-image: url(/images/mainpage.jpg);
       background-size: 1700px 800px;
-      background-repeat: no-repeat;
   }
   
   .sidebar-container {
@@ -98,7 +109,7 @@
   background-color: #ffffff;
   border: 2px solid black;
   opacity: 0.7;
-  height:670px
+  height:1320px
 }
 
 div.transbox h2 {
@@ -165,13 +176,11 @@ div.transbox h2 {
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav ml-auto pd-6">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">My Profile</a>
-      </li>
+      
       <li class="nav-item active">
         <form method="POST"  action="/transaction" >
           <input type="text" name="email" value="{{email}}" id="email" hidden></input>
-          <button type="submit">Transaction History</button>
+          <button class="buttonss" type="submit">Transaction History</button>
         </form>
       </li>
       <li class="nav-item active">
@@ -300,12 +309,12 @@ div.transbox h2 {
         <div class="transbox text-center">
           <br>
           <br>
-          <h3>Predicted Closing Price for 9th November : {{price}}</h3><br>
+          <h3>Predicted Closing Price for 11th November : {{price}}</h3><br>
           <center><h4>Graph(Closing Price)</h4></center><br>
           <canvas id="myChart"></canvas>
           <br>
-          <h3>Predicted Closing Price for 9th November : {{openPrice}}</h3><br>
-          <center><h4>Graph(Closing Price)</h4></center><br>
+          <h3>Predicted Opening Price for 11th November : {{openPrice}}</h3><br>
+          <center><h4>Graph(Opening Price)</h4></center><br>
           <canvas id="myChart2"></canvas>
           <br>
           <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Buy</button>
